@@ -1,0 +1,64 @@
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 600;
+    white-space: nowrap;
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+}
+
+/* Sizes */
+.sm {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+}
+
+.md {
+    padding: 6px 12px;
+    font-size: 0.875rem;
+}
+
+.lg {
+    padding: 8px 16px;
+    font-size: 1rem;
+}
+
+/* Variants */
+.success {
+    background-color: var(--color-success, #27AE60);
+    color: white;
+}
+
+.primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.warning {
+    background-color: var(--color-warning, #F7B801);
+    color: var(--color-dark);
+}
+
+.info {
+    background-color: var(--color-info, #004E89);
+    color: white;
+}
+
+/* Rounded */
+.rounded {
+    border-radius: 999px;
+}
+
+/* Icon */
+.icon {
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+}
+
+/* Hover effect */
+.badge:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}

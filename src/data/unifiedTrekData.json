@@ -1,0 +1,562 @@
+[
+  {
+    "id": "n1",
+    "name": "Manali",
+    "region": "North India",
+    "type": "Group Trip",
+    "tags": [
+      "snow",
+      "mountains",
+      "adventure",
+      "valleys"
+    ],
+    "mood": "Energetic, social, adventurous, scenic",
+    "feel": "Crisp mountain air, towering peaks, pine forests, buzzing cafes"
+  },
+  {
+    "id": "n2",
+    "name": "Kasol",
+    "region": "North India",
+    "type": "Backpacking",
+    "tags": [
+      "river",
+      "forest",
+      "hippie",
+      "chill"
+    ],
+    "mood": "Laid-back, bohemian, relaxed, tranquil",
+    "feel": "Rushing river sounds, dense pine woods, reggae music, wandering trails"
+  },
+  {
+    "id": "n3",
+    "name": "Kheerganga",
+    "region": "North India",
+    "type": "Weekend",
+    "tags": [
+      "trek",
+      "hot springs",
+      "meadows",
+      "nature"
+    ],
+    "mood": "Rewarding, mystical, strenuous, refreshing",
+    "feel": "Steep forest climbs, natural hot sulfur baths, misty mountain tops"
+  },
+  {
+    "id": "n4",
+    "name": "Spiti Valley",
+    "region": "North India",
+    "type": "Group Trip",
+    "tags": [
+      "desert",
+      "high altitude",
+      "monastery",
+      "road trip"
+    ],
+    "mood": "Remote, stark, spiritual, rugged",
+    "feel": "Barren landscapes, ancient Buddhist chants, starry nights, extreme altitude"
+  },
+  {
+    "id": "n5",
+    "name": "Kedarnath",
+    "region": "North India",
+    "type": "Spiritual",
+    "tags": [
+      "temple",
+      "pilgrimage",
+      "himalayan",
+      "devotion"
+    ],
+    "mood": "Reverent, physically demanding, deeply spiritual, peaceful",
+    "feel": "Freezing winds, echoing temple bells, shared devotion, towering snow peaks"
+  },
+  {
+    "id": "n6",
+    "name": "Badrinath",
+    "region": "North India",
+    "type": "Spiritual",
+    "tags": [
+      "temple",
+      "pilgrimage",
+      "river",
+      "valley"
+    ],
+    "mood": "Sacred, historical, serene, devotional",
+    "feel": "Holy river rituals, colorful temple facade, vibrant pilgrim energy, high mountain silence"
+  },
+  {
+    "id": "n7",
+    "name": "Chopta",
+    "region": "North India",
+    "type": "Group Trip",
+    "tags": [
+      "meadows",
+      "snow",
+      "trek",
+      "camping"
+    ],
+    "mood": "Serene, picturesque, pristine, enchanting",
+    "feel": "Rolling green meadows, snow-capped panoramas, starry camping nights, crisp frost"
+  },
+  {
+    "id": "n8",
+    "name": "Auli",
+    "region": "North India",
+    "type": "Weekend",
+    "tags": [
+      "skiing",
+      "snow",
+      "luxury",
+      "cable car"
+    ],
+    "mood": "Exhilarating, premium, snowy, romantic",
+    "feel": "Powder snow, thrilling ski slopes, pine-scented breeze, luxurious winter comfort"
+  },
+  {
+    "id": "n9",
+    "name": "Nainital",
+    "region": "North India",
+    "type": "Group Trip",
+    "tags": [
+      "lake",
+      "boating",
+      "family",
+      "hill station"
+    ],
+    "mood": "Family-friendly, relaxed, nostalgic, charming",
+    "feel": "Placid green lake, bustling mall road, colonial architecture, misty evenings"
+  },
+  {
+    "id": "n10",
+    "name": "Mussoorie",
+    "region": "North India",
+    "type": "Weekend",
+    "tags": [
+      "hill station",
+      "waterfall",
+      "colonial",
+      "romantic"
+    ],
+    "mood": "Classic, romantic, lively, scenic",
+    "feel": "Cloud-covered hills, cascading waterfalls, heritage bakeries, winding mountain roads"
+  },
+  {
+    "id": "s1",
+    "name": "Kerala Backwaters",
+    "region": "South India",
+    "type": "Group Trip",
+    "tags": [
+      "houseboat",
+      "water",
+      "tropical",
+      "relax"
+    ],
+    "mood": "Tranquil, slow-paced, lush, soothing",
+    "feel": "Floating on calm waters, swaying palm trees, tropical humidity, fresh coastal food"
+  },
+  {
+    "id": "s2",
+    "name": "Munnar",
+    "region": "South India",
+    "type": "Weekend",
+    "tags": [
+      "tea estates",
+      "hills",
+      "mist",
+      "nature"
+    ],
+    "mood": "Refreshing, verdant, romantic, quiet",
+    "feel": "Endless green tea carpets, cool mist on the face, aroma of fresh tea, winding ghat roads"
+  },
+  {
+    "id": "s3",
+    "name": "Wayanad",
+    "region": "South India",
+    "type": "Group Trip",
+    "tags": [
+      "forest",
+      "waterfall",
+      "wildlife",
+      "spices"
+    ],
+    "mood": "Wild, adventurous, aromatic, secluded",
+    "feel": "Dense tropical jungles, hidden waterfalls, spice plantation aromas, elephant sightings"
+  },
+  {
+    "id": "s4",
+    "name": "Coorg",
+    "region": "South India",
+    "type": "Weekend",
+    "tags": [
+      "coffee",
+      "hills",
+      "culture",
+      "nature"
+    ],
+    "mood": "Invigorating, cultural, green, relaxing",
+    "feel": "Smell of blooming coffee, misty mornings, grand waterfalls, warm Kodava hospitality"
+  },
+  {
+    "id": "s5",
+    "name": "Chikmagalur",
+    "region": "South India",
+    "type": "Backpacking",
+    "tags": [
+      "coffee",
+      "trek",
+      "peaks",
+      "offbeat"
+    ],
+    "mood": "Adventurous, raw, energetic, scenic",
+    "feel": "High grassy peaks, rugged trekking trails, endless coffee estates, cool mountain wind"
+  },
+  {
+    "id": "s6",
+    "name": "Ooty",
+    "region": "South India",
+    "type": "Group Trip",
+    "tags": [
+      "hill station",
+      "train",
+      "gardens",
+      "nostalgic"
+    ],
+    "mood": "Classic, charming, family-friendly, cool",
+    "feel": "Chugging toy train, manicured botanical gardens, colonial bungalows, chilly evenings"
+  },
+  {
+    "id": "s7",
+    "name": "Kodaikanal",
+    "region": "South India",
+    "type": "Weekend",
+    "tags": [
+      "lake",
+      "forest",
+      "mist",
+      "romantic"
+    ],
+    "mood": "Mysterious, romantic, quiet, misty",
+    "feel": "Star-shaped lake, dense pine forests, sudden mist rolls, homemade chocolate aroma"
+  },
+  {
+    "id": "s8",
+    "name": "Hampi",
+    "region": "South India",
+    "type": "Backpacking",
+    "tags": [
+      "ruins",
+      "boulders",
+      "history",
+      "hippie"
+    ],
+    "mood": "Timeless, awe-inspiring, bohemian, hot",
+    "feel": "Massive granite boulders, ancient temple ruins, laid-back island vibe, spectacular dry sunsets"
+  },
+  {
+    "id": "s9",
+    "name": "Gokarna",
+    "region": "South India",
+    "type": "Weekend",
+    "tags": [
+      "beach",
+      "trek",
+      "spiritual",
+      "chill"
+    ],
+    "mood": "Relaxed, dual-natured, scenic, spiritual",
+    "feel": "Crashing ocean waves, cliffside beach treks, temple chants, sandy toes"
+  },
+  {
+    "id": "s10",
+    "name": "Pondicherry",
+    "region": "South India",
+    "type": "Group Trip",
+    "tags": [
+      "french",
+      "beach",
+      "culture",
+      "food"
+    ],
+    "mood": "European, chic, relaxed, spiritual",
+    "feel": "Yellow colonial walls, French bakeries, spiritual ashram quiet, seaside promenades"
+  },
+  {
+    "id": "ne1",
+    "name": "Meghalaya (Root Bridges)",
+    "region": "North East",
+    "type": "Backpacking",
+    "tags": [
+      "jungle",
+      "rain",
+      "trek",
+      "unique"
+    ],
+    "mood": "Otherworldly, incredibly green, adventurous, wet",
+    "feel": "Living bio-engineering, intense monsoon rain, deep green jungles, roaring waterfalls"
+  },
+  {
+    "id": "ne2",
+    "name": "Shillong",
+    "region": "North East",
+    "type": "Group Trip",
+    "tags": [
+      "music",
+      "hills",
+      "culture",
+      "lakes"
+    ],
+    "mood": "Musical, vibrant, cool, cosmopolitan",
+    "feel": "Rock music culture, rolling pine hills, clean streets, bustling local cafes"
+  },
+  {
+    "id": "ne3",
+    "name": "Cherrapunji",
+    "region": "North East",
+    "type": "Weekend",
+    "tags": [
+      "waterfalls",
+      "caves",
+      "rain",
+      "nature"
+    ],
+    "mood": "Dramatic, misty, awe-inspiring, raw",
+    "feel": "Plunging cliffs, endless waterfalls, dark limestone caves, constant mist"
+  },
+  {
+    "id": "ne4",
+    "name": "Dawki River",
+    "region": "North East",
+    "type": "Group Trip",
+    "tags": [
+      "river",
+      "crystal clear",
+      "boat",
+      "border"
+    ],
+    "mood": "Surreal, peaceful, spectacular, unique",
+    "feel": "Boats floating on air, crystal clear green water, Bangladesh border views, pebble shores"
+  },
+  {
+    "id": "ne5",
+    "name": "Kaziranga",
+    "region": "North East",
+    "type": "Weekend",
+    "tags": [
+      "wildlife",
+      "safari",
+      "rhino",
+      "forest"
+    ],
+    "mood": "Thrilling, wild, expansive, natural",
+    "feel": "Elephant grass meadows, spotting one-horned rhinos, jeep safari bumps, jungle dawn"
+  },
+  {
+    "id": "ne6",
+    "name": "Tawang",
+    "region": "North East",
+    "type": "Spiritual",
+    "tags": [
+      "monastery",
+      "snow",
+      "border",
+      "pass"
+    ],
+    "mood": "Spiritual, remote, freezing, majestic",
+    "feel": "Giant Buddhist prayer wheels, frozen high lakes, military checkpoints, high mountain passes"
+  },
+  {
+    "id": "ne7",
+    "name": "Ziro Valley",
+    "region": "North East",
+    "type": "Backpacking",
+    "tags": [
+      "culture",
+      "music festival",
+      "tribal",
+      "green"
+    ],
+    "mood": "Cultural, festive, lush, offbeat",
+    "feel": "Endless rice paddies, indigenous Apatani culture, acoustic music vibes, bamboo huts"
+  },
+  {
+    "id": "ne8",
+    "name": "Gangtok",
+    "region": "North East",
+    "type": "Group Trip",
+    "tags": [
+      "monastery",
+      "himalayan",
+      "city",
+      "views"
+    ],
+    "mood": "Orderly, scenic, spiritual, welcoming",
+    "feel": "Clean pedestrian streets, panoramic Kanchenjunga views, colorful prayer flags, momo stalls"
+  },
+  {
+    "id": "ne9",
+    "name": "Pelling",
+    "region": "North East",
+    "type": "Weekend",
+    "tags": [
+      "views",
+      "ruins",
+      "monastery",
+      "quiet"
+    ],
+    "mood": "Serene, dramatic, historical, peaceful",
+    "feel": "Close-up snow peaks, ancient palace ruins, peaceful monastery chants, quiet mountain mornings"
+  },
+  {
+    "id": "ne10",
+    "name": "Majuli Island",
+    "region": "North East",
+    "type": "Backpacking",
+    "tags": [
+      "island",
+      "river",
+      "culture",
+      "bicycle"
+    ],
+    "mood": "Slow-paced, cultural, rustic, tranquil",
+    "feel": "Satra monastery performances, cycling dirt paths, massive river currents, bamboo stilt houses"
+  },
+  {
+    "id": "r1",
+    "name": "Jaipur",
+    "region": "Rajasthan",
+    "type": "Group Trip",
+    "tags": [
+      "forts",
+      "palaces",
+      "pink city",
+      "heritage"
+    ],
+    "mood": "Regal, bustling, colorful, historic",
+    "feel": "Massive stone forts, vibrant bazaars, intricate palace windows, royal history"
+  },
+  {
+    "id": "r2",
+    "name": "Udaipur",
+    "region": "Rajasthan",
+    "type": "Weekend",
+    "tags": [
+      "lakes",
+      "palaces",
+      "romantic",
+      "luxury"
+    ],
+    "mood": "Romantic, luxurious, poetic, regal",
+    "feel": "Shimmering lake waters, white marble palaces, rooftop dinners, narrow artistic alleys"
+  },
+  {
+    "id": "r3",
+    "name": "Jaisalmer",
+    "region": "Rajasthan",
+    "type": "Backpacking",
+    "tags": [
+      "desert",
+      "camel",
+      "fort",
+      "sand dunes"
+    ],
+    "mood": "Golden, adventurous, remote, magical",
+    "feel": "Endless sand dunes, living golden fort, camel rides at sunset, folk music under stars"
+  },
+  {
+    "id": "r4",
+    "name": "Jodhpur",
+    "region": "Rajasthan",
+    "type": "Group Trip",
+    "tags": [
+      "blue city",
+      "fort",
+      "culture",
+      "desert"
+    ],
+    "mood": "Imposing, vibrant, historic, dramatic",
+    "feel": "Impregnable Mehrangarh fort, sea of blue houses, spicy street food, desert heat"
+  },
+  {
+    "id": "r5",
+    "name": "Pushkar",
+    "region": "Rajasthan",
+    "type": "Spiritual",
+    "tags": [
+      "lake",
+      "temple",
+      "hippie",
+      "camel fair"
+    ],
+    "mood": "Spiritual, bohemian, chaotic, colorful",
+    "feel": "Holy lake dips, Brahma temple chants, Israeli cafes, vibrant desert culture"
+  },
+  {
+    "id": "r6",
+    "name": "Mount Abu",
+    "region": "Rajasthan",
+    "type": "Weekend",
+    "tags": [
+      "hill station",
+      "temples",
+      "lake",
+      "green"
+    ],
+    "mood": "Cool, surprising, spiritual, relaxing",
+    "feel": "Cooler climate in desert state, marble Dilwara temples, boating on Nakki lake, forest walks"
+  },
+  {
+    "id": "r7",
+    "name": "Bikaner",
+    "region": "Rajasthan",
+    "type": "Group Trip",
+    "tags": [
+      "desert",
+      "palaces",
+      "food",
+      "heritage"
+    ],
+    "mood": "Authentic, historic, culinary, quiet",
+    "feel": "Red sandstone palaces, famous savory snacks, rat temple mystery, deep desert vibes"
+  },
+  {
+    "id": "r8",
+    "name": "Ranthambore",
+    "region": "Rajasthan",
+    "type": "Weekend",
+    "tags": [
+      "tiger",
+      "safari",
+      "wildlife",
+      "fort"
+    ],
+    "mood": "Thrilling, wild, historical, dusty",
+    "feel": "Open jeep safaris, spotting wild tigers, ancient fort in jungle, dry deciduous forest"
+  },
+  {
+    "id": "r9",
+    "name": "Chittorgarh",
+    "region": "Rajasthan",
+    "type": "Backpacking",
+    "tags": [
+      "fort",
+      "history",
+      "ruins",
+      "epic"
+    ],
+    "mood": "Epic, tragic, heroic, monumental",
+    "feel": "Massive sprawling fort, tales of Rajput valor, ruins of palaces, sweeping plains views"
+  },
+  {
+    "id": "r10",
+    "name": "Bundi",
+    "region": "Rajasthan",
+    "type": "Weekend",
+    "tags": [
+      "stepwells",
+      "palace",
+      "blue city",
+      "offbeat"
+    ],
+    "mood": "Offbeat, artistic, quiet, historic",
+    "feel": "Intricate stepwells, miniature paintings, decaying fairy-tale palace, narrow quiet streets"
+  }
+]

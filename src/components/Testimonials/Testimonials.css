@@ -1,0 +1,204 @@
+/* src/components/Testimonials/Testimonials.css */
+.testimonials-section {
+  padding: 5rem 0 6rem;
+  background-color: #f8fafc; /* Very light cool grey */
+  color: #1a1a1a;
+  overflow: hidden; /* Hide horizontal scroll */
+}
+
+.testimonials-section__container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.testimonials-section__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3.5rem;
+  padding: 0 2.5rem;
+}
+
+.testimonials-section__title-group {
+  max-width: 600px;
+}
+
+.testimonials-section__title {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: #1b4332;
+  margin: 0 0 0.5rem 0;
+}
+
+.testimonials-section__subtitle {
+  font-size: 1.1rem;
+  color: #5a7262;
+  margin: 0;
+}
+
+.testimonials-section__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: white;
+  padding: 0.75rem 1.25rem;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  font-weight: 700;
+  color: #1b4332;
+  font-size: 0.95rem;
+}
+
+.testimonials-section__badge-star {
+  color: #fbbf24;
+  font-size: 1.1rem;
+}
+
+/* Marquee / Auto Scroll Logic */
+.testimonials-section__marquee-wrapper {
+  position: relative;
+  display: flex;
+  overflow: hidden;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  padding: 1rem 0;
+  /* Soft fade on edges */
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.testimonials-section__marquee-track {
+  display: flex;
+  gap: 2rem;
+  padding: 0 1rem;
+  width: max-content;
+  /* Total width is 2x the items. Translate by 50% of the entire track width to seamlessly loop 1 full set */
+  animation: scrollMarquee 35s linear infinite;
+  will-change: transform;
+}
+
+.testimonials-section__marquee-wrapper:hover .testimonials-section__marquee-track {
+  animation-play-state: paused;
+}
+
+/* Pause on active/touch for mobile interaction */
+.testimonials-section__marquee-wrapper:active .testimonials-section__marquee-track {
+  animation-play-state: paused;
+}
+
+@keyframes scrollMarquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 1rem)); } /* -50% of the track minus half gap */
+}
+
+/* Card Styling */
+.review-card {
+  width: 380px;
+  background: white;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  user-select: none;
+}
+
+.review-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(27, 67, 50, 0.08);
+}
+
+.review-card__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.review-card__avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.review-card__meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.review-card__name {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #1a1a1a;
+}
+
+.review-card__location {
+  font-size: 0.85rem;
+  color: #64748b;
+}
+
+.review-card__rating {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.review-card__star {
+  color: #10b981; /* Green accent */
+  font-size: 1rem;
+}
+
+.review-card__star.empty {
+  color: #cbd5e1;
+}
+
+.review-card__content {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #334155;
+  font-family: 'Inter', sans-serif;
+  flex-grow: 1;
+}
+
+.review-card__trek {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #059669; /* Darker green */
+  display: inline-block;
+  padding-top: 0.75rem;
+  border-top: 1px solid #f1f5f9;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+  .testimonials-section {
+    padding: 4rem 0 5rem;
+  }
+
+  .testimonials-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+    padding: 0 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .testimonials-section__title {
+    font-size: 1.85rem;
+  }
+
+  .review-card {
+    width: 320px;
+    padding: 1.5rem;
+  }
+
+  /* Since native dragging of a transforming element is complex, we just allow the pause on interaction for reading */
+}

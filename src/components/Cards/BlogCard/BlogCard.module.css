@@ -1,0 +1,146 @@
+.link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card {
+    background: white;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: all var(--transition-normal);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-card-hover);
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-normal);
+}
+
+.card:hover .image {
+    transform: scale(1.05);
+}
+
+.content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin: 0 0 12px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.excerpt {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    margin: 0 0 16px;
+    line-height: 1.6;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    flex: 1;
+}
+
+.meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-border);
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+}
+
+.author {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.metaRight {
+    display: flex;
+    gap: 12px;
+}
+
+.metaItem {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.metaItem svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* Horizontal variant */
+.horizontal {
+    flex-direction: row;
+}
+
+.horizontal .imageWrapper {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+.horizontal .title {
+    font-size: 1.5rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .horizontal {
+        flex-direction: column;
+    }
+
+    .horizontal .imageWrapper {
+        width: 100%;
+    }
+
+    .title {
+        font-size: 1.125rem;
+    }
+
+    .content {
+        padding: 16px;
+    }
+
+    .meta {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

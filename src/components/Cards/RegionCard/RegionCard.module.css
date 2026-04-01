@@ -1,0 +1,10 @@
+.description {
+    font-size: 0.875rem;
+    margin: 8px 0 0;
+    opacity: 0.9;
+    line-height: 1.4;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

@@ -1,0 +1,273 @@
+/* RecommendedSection.css */
+.recommended-section {
+  padding: 5rem 0 4rem;
+  background: #ffffff;
+  position: relative;
+}
+
+.recommended-section__container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2.5rem;
+}
+
+/* --- Header --- */
+.recommended-section__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.recommended-section__title {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(1.8rem, 3.5vw, 2.75rem);
+  font-weight: 800;
+  color: #1b4332;
+  margin: 0 0 0.4rem;
+  position: relative;
+  display: inline-block;
+}
+
+.recommended-section__title::after {
+  content: '';
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #2d6a4f, #40916c);
+  border-radius: 2px;
+}
+
+.recommended-section__subtitle {
+  font-size: 1rem;
+  color: #5a7262;
+  margin: 0;
+  margin-top: 0.75rem;
+  font-style: italic;
+}
+
+.recommended-section__refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1.5px solid #2d6a4f;
+  color: #2d6a4f;
+  padding: 0.55rem 1.1rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.recommended-section__refresh:hover {
+  background: #2d6a4f;
+  color: white;
+}
+
+.recommended-section__refresh svg {
+  font-size: 0.95rem;
+  transition: transform 0.4s ease;
+}
+
+.recommended-section__refresh:hover svg {
+  transform: rotate(180deg);
+}
+
+/* --- Carousel wrapper --- */
+.recommended-section__carousel-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.recommended-section__nav {
+  position: absolute;
+  z-index: 10;
+  background: white;
+  color: #1b4332;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.recommended-section__nav:hover {
+  background: #1b4332;
+  color: white;
+  transform: translateY(-50%) scale(1.05);
+}
+
+.recommended-section__nav.left  { left: -22px; }
+.recommended-section__nav.right { right: -22px; }
+
+@media (max-width: 1100px) {
+  .recommended-section__nav { display: none; }
+}
+
+/* --- Carousel scroll track --- */
+.recommended-section__carousel {
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 1rem 0.5rem;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  width: 100%;
+}
+
+.recommended-section__carousel::-webkit-scrollbar { display: none; }
+
+/* --- Trek Card --- */
+.trek-card {
+  flex: 0 0 280px;
+  aspect-ratio: 3 / 4;
+  scroll-snap-align: start;
+  position: relative;
+  border-radius: 20px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #1b4332;
+  box-shadow: 0 4px 20px rgba(27,67,50,0.10);
+  will-change: transform;
+}
+
+.trek-card:hover {
+  box-shadow: 0 20px 50px rgba(27,67,50,0.22);
+}
+
+.trek-card__image-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.trek-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  will-change: transform;
+}
+
+.trek-card__gradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top,
+    rgba(0,0,0,0.85) 0%,
+    rgba(0,0,0,0.3) 50%,
+    rgba(0,0,0,0.05) 100%);
+  transition: opacity 0.3s;
+}
+
+/* Difficulty badge — top left */
+.trek-card__badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  color: white;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 0.3rem 0.8rem;
+  border-radius: 50px;
+  z-index: 2;
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255,255,255,0.25);
+}
+
+/* Rating — top right */
+.trek-card__rating {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: white;
+  font-size: 0.85rem;
+  font-weight: 700;
+  z-index: 2;
+}
+
+.trek-card__star {
+  color: #fbbf24;
+  font-size: 0.8rem;
+}
+
+/* Text block — bottom */
+.trek-card__text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 1.25rem 1.25rem 1.5rem;
+  z-index: 2;
+  color: white;
+}
+
+.trek-card__location {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  margin: 0 0 0.35rem;
+}
+
+.trek-card__name {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: white;
+  margin: 0 0 0.5rem;
+  line-height: 1.2;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.trek-card__price {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #6ee7b7;
+  margin: 0;
+}
+
+/* --- Mobile --- */
+@media (max-width: 768px) {
+  .recommended-section {
+    padding: 4rem 0 3rem;
+  }
+
+  .recommended-section__container {
+    padding: 0 1.25rem;
+  }
+
+  .recommended-section__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .recommended-section__title {
+    font-size: 1.85rem;
+  }
+
+  .trek-card {
+    flex: 0 0 240px;
+  }
+}

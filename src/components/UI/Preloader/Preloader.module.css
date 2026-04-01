@@ -1,0 +1,76 @@
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.content {
+    text-align: center;
+    color: var(--color-white);
+}
+
+.logo {
+    margin-bottom: var(--spacing-lg);
+}
+
+.mountain {
+    font-size: 4rem;
+    margin-bottom: var(--spacing-md);
+}
+
+.brandName {
+    font-family: var(--font-heading);
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-extrabold);
+    margin: 0;
+    color: var(--color-white);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tagline {
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    margin-bottom: var(--spacing-2xl);
+    opacity: 0.9;
+}
+
+.loader {
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.loaderBar {
+    height: 100%;
+    background: var(--color-white);
+    border-radius: var(--radius-full);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .mountain {
+        font-size: 3rem;
+    }
+
+    .brandName {
+        font-size: var(--font-size-3xl);
+    }
+
+    .tagline {
+        font-size: var(--font-size-base);
+    }
+
+    .loader {
+        width: 150px;
+    }
+}

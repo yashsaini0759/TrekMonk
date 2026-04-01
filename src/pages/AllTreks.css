@@ -1,0 +1,75 @@
+/* src/pages/AllTreks.css */
+.all-treks-page {
+  padding: 8rem 1rem 6rem;
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+.all-treks__header {
+  text-align: center;
+  margin-bottom: 4rem;
+  padding: 0 1rem;
+}
+
+.all-treks__title {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  color: #1b4332;
+  margin: 0 0 1rem 0;
+}
+
+.all-treks__subtitle {
+  font-size: 1.2rem;
+  color: #64748b;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.all-treks__grid-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.all-treks__category {
+  margin-bottom: 5rem;
+}
+
+/* Optional sub-divider between categories could go here */
+
+.all-treks__category-title {
+  font-family: 'Outfit', 'Inter', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1b4332;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid rgba(16, 185, 129, 0.2);
+  padding-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.all-treks__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+}
+
+/* Override carousel styles from RegionCard if necessary */
+.all-treks__grid .region-card {
+  width: 100%;
+  max-width: 380px;
+  flex: none; /* override flex: 0 0 280px */
+}
+
+@media (max-width: 768px) {
+  .all-treks-page {
+    padding: 6rem 1rem 4rem;
+  }
+  
+  .all-treks__grid {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.5rem;
+  }
+}

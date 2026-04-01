@@ -1,0 +1,158 @@
+.link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.card {
+    position: relative;
+    cursor: pointer;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow var(--transition-normal);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-card-hover);
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--transition-normal);
+}
+
+.card:hover .image {
+    transform: scale(1.05);
+}
+
+/* Overlays */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+.gradient {
+    background: linear-gradient(180deg,
+            transparent 0%,
+            transparent 40%,
+            rgba(0, 0, 0, 0.7) 100%);
+}
+
+.dark {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+.light {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.none {
+    background: transparent;
+}
+
+/* Content */
+.content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    color: white;
+    z-index: 2;
+}
+
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.subtitle {
+    font-size: 1rem;
+    margin: 4px 0 0;
+    opacity: 0.95;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Badge positioning */
+.badge {
+    position: absolute;
+    z-index: 3;
+}
+
+.top-left {
+    top: 12px;
+    left: 12px;
+}
+
+.top-right {
+    top: 12px;
+    right: 12px;
+}
+
+.bottom-left {
+    bottom: 12px;
+    left: 12px;
+}
+
+.bottom-right {
+    bottom: 12px;
+    right: 12px;
+}
+
+/* Sizes */
+.sm .title {
+    font-size: 1.125rem;
+}
+
+.sm .subtitle {
+    font-size: 0.875rem;
+}
+
+.md .title {
+    font-size: 1.5rem;
+}
+
+.md .subtitle {
+    font-size: 1rem;
+}
+
+.lg .title {
+    font-size: 2rem;
+}
+
+.lg .subtitle {
+    font-size: 1.25rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .title {
+        font-size: 1.25rem;
+    }
+
+    .subtitle {
+        font-size: 0.875rem;
+    }
+
+    .content {
+        padding: 16px;
+    }
+}

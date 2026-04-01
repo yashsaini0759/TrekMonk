@@ -1,0 +1,38 @@
+.card {
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+    overflow: hidden;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-xl);
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+/* Padding Variants */
+.padding-none {
+    padding: 0;
+}
+
+.padding-sm {
+    padding: var(--spacing-md);
+}
+
+.padding-md {
+    padding: var(--spacing-lg);
+}
+
+.padding-lg {
+    padding: var(--spacing-xl);
+}
+
+/* Dark Mode */
+[data-theme="dark"] .card {
+    background: var(--bg-secondary);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
+}
