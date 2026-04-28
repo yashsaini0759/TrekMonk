@@ -2,16 +2,19 @@ import React, { createContext, useContext, useState, useCallback, useEffect } fr
 import type { Trek, Region, Difficulty } from '../data/trekData';
 
 export interface UserPreferences {
-  clickedTreks: string[];       // trek IDs
+  clickedTreks: string[];       // trek IDs, newest first
   preferredRegions: Region[];
   preferredTags: string[];
   preferredDifficulty: Difficulty[];
   lastViewedName?: string;       // label: "Because you viewed X"
+  lastSearchQuery?: string;      // last search term used
+  activeTrekId?: string;         // the trek currently being viewed
 }
 
 interface UserPreferencesContextValue {
   preferences: UserPreferences;
   recordClick: (trek: Trek) => void;
+  recordSearch: (query: string) => void;
   refreshKey: number;
   refreshRecommendations: () => void;
 }
@@ -21,6 +24,8 @@ const DEFAULT_PREFS: UserPreferences = {
   preferredRegions: [],
   preferredTags: [],
   preferredDifficulty: [],
+  lastSearchQuery: '',
+  activeTrekId: undefined,
 };
 
 const STORAGE_KEY = 'tm_user_prefs';
@@ -43,6 +48,7 @@ function savePrefs(prefs: UserPreferences) {
 const UserPreferencesContext = createContext<UserPreferencesContextValue>({
   preferences: DEFAULT_PREFS,
   recordClick: () => {},
+  recordSearch: () => {},
   refreshKey: 0,
   refreshRecommendations: () => {},
 });
@@ -56,8 +62,8 @@ export const UserPreferencesProvider: React.FC<{ children: React.ReactNode }> = 
   const recordClick = useCallback((trek: Trek) => {
     setPreferences(prev => {
       const clickedTreks = prev.clickedTreks.includes(trek.id)
-        ? prev.clickedTreks
-        : [trek.id, ...prev.clickedTreks].slice(0, 20); // keep last 20
+        ? [trek.id, ...prev.clickedTreks.filter(id => id !== trek.id)].slice(0, 20)
+        : [trek.id, ...prev.clickedTreks].slice(0, 20);
 
       const addUnique = <T,>(arr: T[], item: T, max = 10) =>
         arr.includes(item) ? arr : [item, ...arr].slice(0, max);
@@ -65,12 +71,22 @@ export const UserPreferencesProvider: React.FC<{ children: React.ReactNode }> = 
       return {
         ...prev,
         clickedTreks,
+        activeTrekId: trek.id,
         preferredRegions: addUnique(prev.preferredRegions, trek.region) as Region[],
         preferredDifficulty: addUnique(prev.preferredDifficulty, trek.difficulty) as Difficulty[],
         preferredTags: [...new Set([...trek.tags, ...prev.preferredTags])].slice(0, 30),
         lastViewedName: trek.name,
       };
     });
+    // Auto-refresh the recommendation carousel on every click
+    setRefreshKey(k => k + 1);
+  }, []);
+
+  const recordSearch = useCallback((query: string) => {
+    setPreferences(prev => ({
+      ...prev,
+      lastSearchQuery: query,
+    }));
   }, []);
 
   const refreshRecommendations = useCallback(() => {
@@ -78,7 +94,9 @@ export const UserPreferencesProvider: React.FC<{ children: React.ReactNode }> = 
   }, []);
 
   return (
-    <UserPreferencesContext.Provider value={{ preferences, recordClick, refreshKey, refreshRecommendations }}>
+    <UserPreferencesContext.Provider
+      value={{ preferences, recordClick, recordSearch, refreshKey, refreshRecommendations }}
+    >
       {children}
     </UserPreferencesContext.Provider>
   );

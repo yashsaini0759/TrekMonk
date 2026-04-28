@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaStar } from 'react-icons/fa';
+import { FiEye } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import type { Trek } from '../../data/trekData';
 import { useUserPreferences } from '../../context/UserPreferencesContext';
@@ -26,27 +27,39 @@ const cardVariants = {
 };
 
 const TrekCard: React.FC<TrekCardProps> = ({ trek, index }) => {
-  const { recordClick } = useUserPreferences();
+  const { recordClick, preferences } = useUserPreferences();
   const navigate = useNavigate();
+
+  const isCurrentlyViewed = preferences.activeTrekId === trek.id;
 
   const handleClick = () => {
     recordClick(trek);
     navigate(`/trek/${trek.slug}`);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
     <motion.div
-      className="trek-card"
+      className={`trek-card${isCurrentlyViewed ? ' trek-card--active' : ''}`}
       custom={index}
       variants={cardVariants}
-      whileHover={{ scale: 1.03, y: -6 }}
+      whileHover={{ scale: isCurrentlyViewed ? 1.01 : 1.03, y: -6 }}
       whileTap={{ scale: 0.98 }}
       onClick={handleClick}
       role="button"
       tabIndex={0}
       onKeyDown={e => e.key === 'Enter' && handleClick()}
-      aria-label={`View ${trek.name}`}
+      aria-label={`View ${trek.name}${isCurrentlyViewed ? ' (currently viewing)' : ''}`}
+      aria-current={isCurrentlyViewed ? 'true' : undefined}
     >
+      {/* "Currently Viewing" badge */}
+      {isCurrentlyViewed && (
+        <div className="trek-card__viewing-badge">
+          <FiEye />
+          <span>Viewing</span>
+        </div>
+      )}
+
       {/* Image */}
       <div className="trek-card__image-wrap">
         <motion.img

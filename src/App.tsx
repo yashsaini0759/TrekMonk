@@ -13,6 +13,8 @@ import ScrollToTop from './components/ScrollToTop';
 
 import './styles/globals.css';
 
+import TripPlannerPage from './pages/TripPlanner/TripPlannerPage';
+
 const App: React.FC = () => {
   return (
     <UserPreferencesProvider>
@@ -28,6 +30,7 @@ const App: React.FC = () => {
             <Route path="/trek/:slug" element={<TrekDetails />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/plan-trip" element={<TripPlannerPage />} />
           </Routes>
 
           <Footer />

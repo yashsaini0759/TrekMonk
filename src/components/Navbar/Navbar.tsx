@@ -11,6 +11,7 @@ import type { NavigationItem } from './Navbar.types';
 const NAV_ITEMS: NavigationItem[] = [
     { label: 'Home', path: '/' },
     { label: 'Treks', path: '/all-treks' },
+    { label: 'Plan a Trip', path: '/plan-trip' },
     { label: 'About Us', path: '/about' },
     { label: 'Contact Us', path: '/contact' },
 ];

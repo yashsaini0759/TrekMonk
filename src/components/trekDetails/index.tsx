@@ -10,6 +10,7 @@ import TrekBookingCard from './TrekBookingCard';
 import TrekInquiryForm from './TrekInquiryForm';
 import TrekFAQ from './TrekFAQ';
 import TrekReviewsPreview from './TrekReviewsPreview';
+import TrekRecommendations from './TrekRecommendations';
 import type { Trek, CityOption } from '../../data/trekData';
 import '../../styles/trekDetails.css';
 
@@ -45,6 +46,7 @@ const TrekDetailsPage: React.FC<Props> = ({ trek }) => {
           <TrekAttractions trek={trek} />
           <TrekReviewsPreview trek={trek} />
           <TrekFAQ trek={trek} />
+          <TrekRecommendations trek={trek} />
           <TrekInquiryForm />
         </div>
 

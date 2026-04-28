@@ -1,6 +1,9 @@
+import { searchTreks as engineSearch, getSearchRecommendations } from '../engine/recommendationEngine';
 import { unifiedTrekData as allTreks } from '../data/unifiedTrekData';
 import type { Trek } from '../data/trekData';
 import type { UserPreferences } from '../context/UserPreferencesContext';
+
+export { getSearchRecommendations };
 
 const CATEGORIES: { label: string; tags: string[] }[] = [
   { label: 'Snow Treks', tags: ['snow', 'winter trek'] },
@@ -24,32 +27,24 @@ export function debounce<T extends (...args: unknown[]) => void>(fn: T, ms: numb
   }) as T;
 }
 
-/** Score a trek for relevance to query + preference boost */
-function trekRelevance(trek: Trek, query: string, prefs: UserPreferences): number {
-  const q = query.toLowerCase();
-  let score = 0;
-  const nameLower = trek.name.toLowerCase();
-  const locationLower = trek.location.toLowerCase();
-
-  if (nameLower === q) score += 100;                             // exact match
-  else if (nameLower.startsWith(q)) score += 60;                // prefix match
-  else if (nameLower.includes(q)) score += 40;                  // partial match
-  else if (locationLower.includes(q)) score += 30;              // location match
-  else if (trek.tags.some(t => t.includes(q))) score += 20;    // tag match
-
-  // Preference boost
-  if (prefs.preferredRegions.includes(trek.region)) score += 10;
-  if (trek.tags.some(t => prefs.preferredTags.includes(t))) score += 8;
-
-  return score;
-}
-
+/**
+ * Main search function — delegates to the recommendation engine for consistent scoring.
+ * `prefs` is kept for API compatibility but scoring is done inside the engine.
+ */
 export function searchTreks(query: string, prefs: UserPreferences, limit = 5): Trek[] {
   if (!query.trim()) return [];
-  return allTreks
-    .map(t => ({ trek: t, score: trekRelevance(t, query, prefs) }))
-    .filter(x => x.score > 0)
-    .sort((a, b) => b.score - a.score)
+  // Prefer user-preferred regions/tags in ranking
+  const results = engineSearch(query);
+  // Boost treks that match user preferences
+  const boosted = results.map(trek => {
+    let boost = 0;
+    if (prefs.preferredRegions.includes(trek.region)) boost += 10;
+    if (trek.tags.some(t => prefs.preferredTags.includes(t))) boost += 8;
+    if (prefs.preferredDifficulty.includes(trek.difficulty)) boost += 5;
+    return { trek, boost };
+  });
+  return boosted
+    .sort((a, b) => b.boost - a.boost)
     .slice(0, limit)
     .map(x => x.trek);
 }
@@ -78,7 +73,6 @@ export function getMatchedLocations(query: string, limit = 4): string[] {
       }
     }
   }
-  // Also include trek names if they match location-style searches
   if (results.length < limit) {
     for (const trek of allTreks) {
       if (trek.name.toLowerCase().includes(q) && !seen.has(trek.name)) {
