@@ -275,3 +275,63 @@
 @media (max-width: 420px) {
   .region-card__title { font-size: 0.85rem; }
 }
+
+/* ── Price badge (top-right) ─────────────────────────────────────── */
+.region-card__price {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  padding: 0.3rem 0.7rem;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  z-index: 2;
+  transition: background 0.3s ease;
+}
+
+.region-card:hover .region-card__price {
+  background: rgba(27, 67, 50, 0.85);
+}
+
+/* ── Meta row: duration + difficulty ─────────────────────────────── */
+.region-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.region-card__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(6px);
+  padding: 0.22rem 0.55rem;
+  border-radius: 50px;
+}
+
+.region-card__difficulty {
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border: none;
+  padding: 0.24rem 0.6rem;
+}
+
+@media (max-width: 768px) {
+  .region-card__price { font-size: 0.7rem; padding: 0.25rem 0.55rem; top: 0.6rem; right: 0.6rem; }
+  .region-card__meta-item { font-size: 0.62rem; }
+}
+

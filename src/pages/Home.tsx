@@ -14,8 +14,14 @@ const trekToPlace = (trek: any) => ({
   name: trek.name,
   slug: trek.slug,
   image: trek.image,
-  tag: trek.difficulty,
+  tag: trek.difficulty ?? trek.tag ?? 'Group Trip',
+  price: trek.price ?? 0,
+  duration: trek.duration ?? trek.days ?? 0,
+  difficulty: (trek.difficulty === 'Easy' || trek.difficulty === 'Moderate' || trek.difficulty === 'Difficult')
+    ? trek.difficulty
+    : 'Moderate',
 });
+
 
 const Home: React.FC = () => {
   const { preferences } = useUserPreferences();

@@ -21,6 +21,12 @@ const itemVariants = {
   }),
 };
 
+const difficultyColors: Record<string, string> = {
+  Easy: 'rgba(16, 185, 129, 0.88)',
+  Moderate: 'rgba(245, 158, 11, 0.88)',
+  Difficult: 'rgba(239, 68, 68, 0.88)',
+};
+
 const RegionCard: React.FC<RegionCardProps> = ({ place, index }) => {
   const navigate = useNavigate();
 
@@ -54,12 +60,38 @@ const RegionCard: React.FC<RegionCardProps> = ({ place, index }) => {
         <div className="region-card__gradient" />
       </div>
 
+      {/* Trip type tag — top left */}
       <span className="region-card__tag" data-type={place.tag}>{place.tag}</span>
+
+      {/* Price badge — top right */}
+      {place.price > 0 && (
+        <span className="region-card__price">₹{place.price.toLocaleString('en-IN')}</span>
+      )}
 
       <div className="region-card__content">
         <h3 className="region-card__title">{place.name}</h3>
+
+        {/* Meta row: duration + difficulty */}
+        <div className="region-card__meta">
+          {place.duration > 0 && (
+            <span className="region-card__meta-item">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+              {place.duration}D
+            </span>
+          )}
+          {place.difficulty && (
+            <span
+              className="region-card__meta-item region-card__difficulty"
+              style={{ background: difficultyColors[place.difficulty] ?? 'rgba(100,100,100,0.8)' }}
+            >
+              {place.difficulty}
+            </span>
+          )}
+        </div>
       </div>
-      
+
       {/* Glow highlight effect */}
       <div className="region-card__glow-highlight" />
     </motion.div>
