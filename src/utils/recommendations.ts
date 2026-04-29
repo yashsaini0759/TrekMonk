@@ -1,4 +1,4 @@
-import { Trip } from '../types';
+import type { Trip } from '../types';
 
 /**
  * Smart recommendation engine for TrekMonk

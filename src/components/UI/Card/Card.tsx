@@ -9,6 +9,7 @@ interface CardProps {
     onClick?: () => void;
     hoverable?: boolean;
     padding?: 'none' | 'sm' | 'md' | 'lg';
+    style?: React.CSSProperties;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -17,6 +18,7 @@ const Card: React.FC<CardProps> = ({
     onClick,
     hoverable = true,
     padding = 'md',
+    style,
 }) => {
     const classNames = [
         styles.card,
@@ -33,6 +35,7 @@ const Card: React.FC<CardProps> = ({
         <MotionCard
             className={classNames}
             onClick={onClick}
+            style={style}
             variants={hoverable ? cardHover : undefined}
             initial="rest"
             whileHover={hoverable ? "hover" : undefined}

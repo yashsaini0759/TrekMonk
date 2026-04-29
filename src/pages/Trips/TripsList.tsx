@@ -5,7 +5,7 @@ import { trips } from '../../data/trips';
 import { pageTransition } from '../../utils/animations';
 import Card from '../../components/UI/Card/Card';
 import Button from '../../components/UI/Button/Button';
-import { FiCalendar, FiStar, FiHeart } from 'react-icons/fi';
+
 
 const TripsList: React.FC = () => {
     return (

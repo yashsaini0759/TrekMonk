@@ -3,7 +3,7 @@ import CategoryGrid from '../../components/Sections/CategoryGrid/CategoryGrid';
 import RegionSection from '../../components/Sections/RegionSection/RegionSection';
 import BlogCard from '../../components/Cards/BlogCard/BlogCard';
 import { categories } from '../../data/categories';
-import { trips, getFeaturedTrips } from '../../data/trips';
+import { getFeaturedTrips } from '../../data/trips';
 import { blogs } from '../../data/blogs';
 import { testimonials } from '../../data/testimonials';
 import styles from './Home.module.css';

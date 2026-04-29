@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import type { User } from '../types';
 
 interface AuthContextType {
@@ -35,7 +36,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     }, []);
 
-    const login = async (email: string, password: string) => {
+    const login = async (email: string, _password: string) => {
         // Mock login - in production, this would call an API
         const mockUser: User = {
             id: '1',
@@ -53,7 +54,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         localStorage.setItem('trekmonk_user', JSON.stringify(mockUser));
     };
 
-    const register = async (name: string, email: string, password: string) => {
+    const register = async (name: string, email: string, _password: string) => {
         // Mock registration - in production, this would call an API
         const mockUser: User = {
             id: Date.now().toString(),

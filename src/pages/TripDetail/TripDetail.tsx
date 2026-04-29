@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { getTripBySlug } from '../../data/trips';
 import { pageTransition } from '../../utils/animations';

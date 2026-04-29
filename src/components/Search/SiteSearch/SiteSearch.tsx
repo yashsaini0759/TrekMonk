@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FiSearch, FiX, FiTrendingUp, FiClock } from 'react-icons/fi';
 import { FaStar, FaMapMarkerAlt } from 'react-icons/fa';
@@ -23,24 +24,24 @@ const DIFFICULTY_COLORS: Record<string, string> = {
 
 const POPULAR_TAGS = ['snow', 'beach', 'desert', 'forest', 'monastery', 'wildlife', 'heritage', 'backpacking'];
 
-const overlayVariants = {
+const overlayVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { duration: 0.22 } },
   exit:   { opacity: 0, transition: { duration: 0.18 } },
 };
 
-const panelVariants = {
+const panelVariants: Variants = {
   hidden: { opacity: 0, y: -20, scale: 0.98 },
-  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.28, ease: 'easeOut' } },
+  visible: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.28, ease: 'easeOut' as const } },
   exit:   { opacity: 0, y: -16, scale: 0.97, transition: { duration: 0.18 } },
 };
 
-const listVariants = {
+const listVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.04 } },
 };
 
-const itemVariants = {
+const itemVariants: Variants = {
   hidden: { opacity: 0, x: -12 },
   visible: { opacity: 1, x: 0, transition: { duration: 0.28 } },
 };

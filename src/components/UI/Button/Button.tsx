@@ -1,9 +1,10 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
+import type { HTMLMotionProps } from 'framer-motion';
 import styles from './Button.module.css';
 import { buttonTap } from '../../../utils/animations';
 
-interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps extends Omit<HTMLMotionProps<'button'>, 'children'> {
     variant?: 'primary' | 'secondary' | 'outline' | 'ghost';
     size?: 'sm' | 'md' | 'lg';
     fullWidth?: boolean;
