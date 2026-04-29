@@ -10,6 +10,7 @@ import Contact from './pages/Contact/Contact';
 import { UserPreferencesProvider } from './context/UserPreferencesContext';
 import { ToastProvider } from './context/ToastContext';
 import ScrollToTop from './components/ScrollToTop';
+import AIChatbot from './components/TripPlanner/AIChatbot';
 
 import './styles/globals.css';
 
@@ -34,6 +35,7 @@ const App: React.FC = () => {
           </Routes>
 
           <Footer />
+          <AIChatbot />
         </div>
       </Router>
       </ToastProvider>

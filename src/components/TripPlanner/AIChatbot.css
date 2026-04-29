@@ -1,0 +1,428 @@
+/* ─── Floating Action Button ─────────────────────────────────────── */
+.ai-fab {
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  border: none;
+  color: white;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  box-shadow: 0 8px 24px rgba(255, 107, 53, 0.45);
+  position: fixed;
+}
+
+.ai-fab-icon {
+  position: relative;
+  z-index: 1;
+  line-height: 1;
+}
+
+.ai-fab-pulse {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(255, 107, 53, 0.4);
+  animation: pulse 2s ease-out infinite;
+}
+
+@keyframes pulse {
+  0%   { transform: scale(1); opacity: 0.7; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* ─── Chat Window ────────────────────────────────────────────────── */
+.ai-window {
+  position: fixed;
+  bottom: 104px;
+  right: 32px;
+  width: 340px;
+  height: 480px;
+  max-height: calc(100vh - 140px);
+  background: #ffffff;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  z-index: 9998;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.18);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* ─── Header ─────────────────────────────────────────────────────── */
+.ai-header {
+  background: linear-gradient(135deg, #1b4332, #2d6a4f);
+  padding: 0.9rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ai-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.ai-avatar {
+  font-size: 1.4rem;
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ai-header-name {
+  margin: 0;
+  color: white;
+  font-weight: 700;
+  font-size: 0.9rem;
+  line-height: 1.2;
+}
+
+.ai-header-status {
+  margin: 0;
+  color: #86efac;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.ai-header-actions {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.ai-close-btn,
+.ai-reset-btn {
+  background: rgba(255,255,255,0.15);
+  border: none;
+  color: white;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.ai-close-btn:hover,
+.ai-reset-btn:hover {
+  background: rgba(255,255,255,0.3);
+}
+
+/* ─── Messages Body ──────────────────────────────────────────────── */
+.ai-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  background: #f8fafc;
+  scroll-behavior: smooth;
+}
+
+.ai-body::-webkit-scrollbar { width: 4px; }
+.ai-body::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
+
+.ai-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.ai-row.user { align-items: flex-end; }
+.ai-row.ai   { align-items: flex-start; }
+
+.ai-bubble {
+  max-width: 82%;
+  padding: 0.6rem 0.9rem;
+  border-radius: 16px;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.ai-bubble.user {
+  background: #1b4332;
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.ai-bubble.ai {
+  background: white;
+  color: #1f2937;
+  border-bottom-left-radius: 4px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+/* Typing dots */
+.ai-typing {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 0.7rem 0.9rem;
+}
+
+.ai-typing span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #9ca3af;
+  animation: dot 1.3s infinite both;
+}
+.ai-typing span:nth-child(2) { animation-delay: 0.2s; }
+.ai-typing span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot {
+  0%, 80%, 100% { transform: scale(0.7); opacity: 0.4; }
+  40%           { transform: scale(1);   opacity: 1; }
+}
+
+/* ─── Quick Reply Chips ──────────────────────────────────────────── */
+.ai-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.1rem 0.2rem;
+}
+
+.ai-chip {
+  background: white;
+  border: 1.5px solid #d1fae5;
+  color: #1b4332;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.ai-chip:hover {
+  background: #1b4332;
+  color: white;
+  border-color: #1b4332;
+}
+
+/* ─── Destination Cards ──────────────────────────────────────────── */
+.ai-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 280px;
+}
+
+.ai-card {
+  background: white;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  cursor: pointer;
+  border: 1px solid #e5e7eb;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.ai-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.ai-card img {
+  width: 100%;
+  height: 90px;
+  object-fit: cover;
+}
+
+.ai-card-body {
+  padding: 0.7rem;
+}
+
+.ai-card-body h4 {
+  margin: 0 0 0.2rem;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #1b4332;
+}
+
+.ai-card-body p {
+  margin: 0 0 0.4rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+  line-height: 1.35;
+}
+
+.ai-card-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.6rem;
+}
+
+.ai-card-cta {
+  width: 100%;
+  background: linear-gradient(135deg, #ff6b35, #ff8c42);
+  color: white;
+  border: none;
+  padding: 0.45rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.ai-card-cta:hover { opacity: 0.88; }
+
+/* ─── Extended Card Metadata ─────────────────────────────────────── */
+.ai-card { cursor: default; }
+
+.ai-card-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.2rem;
+}
+
+.ai-card-state {
+  font-size: 0.68rem;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-left: 0.4rem;
+  margin-top: 2px;
+}
+
+.ai-card-why {
+  margin: 0 0 0.4rem;
+  font-size: 0.78rem;
+  color: #4b5563;
+  line-height: 1.35;
+}
+
+.ai-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 0.6rem;
+}
+
+.ai-tag {
+  font-size: 0.68rem;
+  color: #1b4332;
+  background: #d1fae5;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.ai-card-section {
+  margin-bottom: 0.6rem;
+}
+
+.ai-section-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.25rem;
+}
+
+.ai-card-highlights {
+  font-size: 0.74rem;
+  color: #6b7280;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.ai-stop-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  padding: 0.3rem 0;
+  border-top: 1px dashed #e5e7eb;
+  font-size: 0.73rem;
+  color: #374151;
+  line-height: 1.4;
+}
+
+.ai-stop-row strong {
+  color: #1b4332;
+  font-size: 0.78rem;
+}
+
+
+/* ─── Footer ─────────────────────────────────────────────────────── */
+.ai-footer {
+  padding: 0.75rem;
+  background: white;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.ai-input {
+  flex: 1;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.88rem;
+  outline: none;
+  background: #f8fafc;
+  transition: border-color 0.2s;
+}
+
+.ai-input:focus { border-color: #1b4332; }
+
+.ai-send {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  background: #1b4332;
+  color: white;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+  flex-shrink: 0;
+}
+
+.ai-send:disabled { background: #d1d5db; cursor: not-allowed; }
+.ai-send:not(:disabled):hover { background: #2d6a4f; }
+
+/* ─── Mobile ─────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .ai-window {
+    width: calc(100vw - 32px);
+    right: 16px;
+    bottom: 96px;
+  }
+  .ai-fab {
+    right: 16px;
+    bottom: 24px;
+  }
+}

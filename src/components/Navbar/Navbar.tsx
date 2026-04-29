@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { FaMountain, FaSearch, FaBars, FaTimes, FaArrowRight, FaMapMarkerAlt } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useUserPreferences } from '../../context/UserPreferencesContext';
 import { searchTreks, getMatchedCategories, getMatchedLocations } from '../../utils/searchUtils';
 import type { Trek } from '../../data/trekData';
@@ -11,7 +11,6 @@ import type { NavigationItem } from './Navbar.types';
 const NAV_ITEMS: NavigationItem[] = [
     { label: 'Home', path: '/' },
     { label: 'Treks', path: '/all-treks' },
-    { label: 'Plan a Trip', path: '/plan-trip' },
     { label: 'About Us', path: '/about' },
     { label: 'Contact Us', path: '/contact' },
 ];
@@ -19,6 +18,7 @@ const NAV_ITEMS: NavigationItem[] = [
 const POPULAR_REGIONS = ['Himalayas', 'Meghalaya', 'Rajasthan', 'Uttarakhand', 'Kerala'];
 
 const Navbar: React.FC = () => {
+    const navigate = useNavigate();
     // --- STATE ---
     const [isScrolled, setIsScrolled] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
@@ -293,8 +293,9 @@ const Navbar: React.FC = () => {
                             className="cta-button"
                             whileHover={{ scale: 1.05, boxShadow: "0 6px 25px rgba(45, 106, 79, 0.5)" }}
                             whileTap={{ scale: 0.95 }}
+                            onClick={() => navigate('/plan-trip')}
                         >
-                            Book Now
+                            Plan a Trip
                         </motion.button>
                     </div>
 
@@ -362,8 +363,12 @@ const Navbar: React.FC = () => {
                     <motion.button
                         className="cta-button mobile-cta"
                         whileTap={{ scale: 0.95 }}
+                        onClick={() => {
+                            setIsMobileMenuOpen(false);
+                            navigate('/plan-trip');
+                        }}
                     >
-                        Book Now
+                        Plan a Trip
                     </motion.button>
                 </motion.div>
             </div>

@@ -3,185 +3,264 @@ import type { ReactNode } from 'react';
 import type {
   TripPlan,
   PriceSummary,
-  PlanStop,
+  StopSelection,
   TransportMode,
-  PlanTier,
-  MealPlan,
+  PlannerPhase,
 } from '../types/planner';
-import { getDestinationData, TRANSPORT_PRICES } from '../data/plannerData';
+import { getRouteConfig, getLegPrice } from '../data/routeData';
 
 interface TripPlannerContextType {
-  currentStep: number;
-  setCurrentStep: (step: number) => void;
+  phase: PlannerPhase;
+  setPhase: (phase: PlannerPhase) => void;
   tripPlan: TripPlan;
   priceSummary: PriceSummary;
-  setPickup: (cityId: string) => void;
+  
+  // Setup Actions
+  setPickup: (cityId: string, name: string) => void;
   setDestination: (destId: string, name: string) => void;
   setTransport: (mode: TransportMode) => void;
-  setBudget: (budget: number) => void;
-  addStop: (destId: string, name: string) => void;
-  removeStop: (destId: string) => void;
-  reorderStops: (startIndex: number, endIndex: number) => void;
-  setDaysForStop: (destId: string, days: number) => void;
-  setHotelForStop: (destId: string, hotelId: string | null) => void;
-  setMealPlanForStop: (destId: string, mealPlan: MealPlan) => void;
-  toggleActivityForStop: (destId: string, activityId: string) => void;
-  setPlanTier: (tier: PlanTier) => void;
-  autoBookAll: () => void;
+  setTravellers: (count: number) => void;
+  confirmRoute: () => void;
+  applyAITrip: (destinationId: string, days: number, budgetTier: 'budget' | 'comfort' | 'luxury') => void;
+  
+  // Customizer Actions
+  toggleStopIncluded: (stopId: string) => void;
+  toggleStopCollapsed: (stopId: string) => void;
+  updateStopSelection: (stopId: string, updates: Partial<StopSelection>) => void;
+  toggleActivity: (stopId: string, activityId: string) => void;
 }
 
 const defaultPlan: TripPlan = {
-  pickup: '',
+  pickupId: '',
+  pickupName: '',
   destinationId: '',
+  destinationName: '',
   transport: null,
-  stops: [],
-  selectedTier: 'balanced',
-  budget: 25000,
+  travellers: 1,
+  stopSelections: [],
 };
 
 const TripPlannerContext = createContext<TripPlannerContextType | undefined>(undefined);
 
 export const TripPlannerProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [currentStep, setCurrentStep] = useState(1);
+  const [phase, setPhase] = useState<PlannerPhase>('setup');
   const [tripPlan, setTripPlan] = useState<TripPlan>(defaultPlan);
 
-  // Actions
-  const setPickup = (cityId: string) => setTripPlan(prev => ({ ...prev, pickup: cityId }));
+  // --- SETUP ACTIONS ---
+  const setPickup = (id: string, name: string) => setTripPlan(prev => ({ ...prev, pickupId: id, pickupName: name }));
+  const setDestination = (id: string, name: string) => setTripPlan(prev => ({ ...prev, destinationId: id, destinationName: name }));
   const setTransport = (mode: TransportMode) => setTripPlan(prev => ({ ...prev, transport: mode }));
-  const setBudget = (budget: number) => setTripPlan(prev => ({ ...prev, budget }));
-  
-  const setDestination = (destId: string, name: string) => {
-    setTripPlan(prev => ({
-      ...prev,
-      destinationId: destId,
-      // Reset stops and add the main destination as the primary stop
-      stops: [{ destinationId: destId, name, days: 3, hotelId: null, selectedActivities: [], mealPlan: 'none' }]
+  const setTravellers = (count: number) => setTripPlan(prev => ({ ...prev, travellers: count }));
+
+  const confirmRoute = () => {
+    const route = getRouteConfig(tripPlan.pickupId, tripPlan.destinationId);
+    if (!route) {
+      alert("Route not supported yet. Try New Delhi -> Kedarkantha Base.");
+      return;
+    }
+    
+    // Initialize stop selections based on route graph
+    const initialStops: StopSelection[] = route.stops.map(node => ({
+      stopId: node.id,
+      name: node.name,
+      isIncluded: !node.isOptional, // mandatory stops included by default
+      isCollapsed: false,
+      days: node.id === route.destinationId ? 3 : 1, // 3 days for destination, 1 for stops
+      hotelId: null,
+      mealPlan: 'none',
+      selectedActivityIds: [],
     }));
+
+    setTripPlan(prev => ({ ...prev, stopSelections: initialStops }));
+    setPhase('customize');
   };
 
-  const addStop = (destId: string, name: string) => {
-    setTripPlan(prev => {
-      if (prev.stops.find(s => s.destinationId === destId)) return prev;
+  const applyAITrip = (destinationId: string, days: number, budgetTier: 'budget' | 'comfort' | 'luxury') => {
+    // Default to Delhi for demo
+    setPickup('del', 'New Delhi');
+    const destName = destinationId === 'dest_kedarkantha' ? 'Kedarkantha Base' : 'Bhrigu Lake';
+    setDestination(destinationId, destName);
+    setTransport('bus');
+    setTravellers(1);
+
+    const route = getRouteConfig('del', destinationId);
+    if (!route) return;
+
+    // Distribute days across stops (rough heuristic)
+    const totalStops = route.stops.length;
+    const daysPerStop = Math.max(1, Math.floor(days / totalStops));
+
+    const initialStops: StopSelection[] = route.stops.map((node, idx) => {
+      // Find a hotel matching the budget tier, or just fallback to the first one
+      const hotel = node.hotels.find(h => h.tier === budgetTier) || node.hotels[0];
+      
       return {
-        ...prev,
-        stops: [...prev.stops, { destinationId: destId, name, days: 2, hotelId: null, selectedActivities: [], mealPlan: 'none' }]
+        stopId: node.id,
+        name: node.name,
+        isIncluded: !node.isOptional,
+        isCollapsed: false,
+        days: idx === totalStops - 1 ? days - (daysPerStop * (totalStops - 1)) : daysPerStop, 
+        hotelId: hotel ? hotel.id : null,
+        mealPlan: 'fullboard',
+        selectedActivityIds: [],
       };
     });
+
+    // We can't use prev state inside setTripPlan here reliably for pickup/dest because setState is async.
+    // So we just override the whole plan.
+    setTripPlan({
+      pickupId: 'del',
+      pickupName: 'New Delhi',
+      destinationId,
+      destinationName: destName,
+      transport: 'bus',
+      travellers: 1,
+      stopSelections: initialStops
+    });
+
+    setPhase('customize');
   };
 
-  const removeStop = (destId: string) => {
+  // --- CUSTOMIZER ACTIONS ---
+  const toggleStopIncluded = (stopId: string) => {
     setTripPlan(prev => ({
       ...prev,
-      stops: prev.stops.filter(s => s.destinationId !== destId)
+      stopSelections: prev.stopSelections.map(s => 
+        s.stopId === stopId ? { ...s, isIncluded: !s.isIncluded } : s
+      )
     }));
   };
 
-  const reorderStops = (startIndex: number, endIndex: number) => {
-    setTripPlan(prev => {
-      const newStops = Array.from(prev.stops);
-      const [removed] = newStops.splice(startIndex, 1);
-      newStops.splice(endIndex, 0, removed);
-      return { ...prev, stops: newStops };
-    });
-  };
-
-  const updateStop = (destId: string, updater: (stop: PlanStop) => PlanStop) => {
+  const toggleStopCollapsed = (stopId: string) => {
     setTripPlan(prev => ({
       ...prev,
-      stops: prev.stops.map(s => s.destinationId === destId ? updater(s) : s)
+      stopSelections: prev.stopSelections.map(s => 
+        s.stopId === stopId ? { ...s, isCollapsed: !s.isCollapsed } : s
+      )
     }));
   };
 
-  const setDaysForStop = (destId: string, days: number) => updateStop(destId, s => ({ ...s, days }));
-  const setHotelForStop = (destId: string, hotelId: string | null) => updateStop(destId, s => ({ ...s, hotelId }));
-  const setMealPlanForStop = (destId: string, mealPlan: MealPlan) => updateStop(destId, s => ({ ...s, mealPlan }));
-
-  const toggleActivityForStop = (destId: string, activityId: string) => {
-    updateStop(destId, s => {
-      const has = s.selectedActivities.includes(activityId);
-      return {
-        ...s,
-        selectedActivities: has
-          ? s.selectedActivities.filter(id => id !== activityId)
-          : [...s.selectedActivities, activityId]
-      };
-    });
+  const updateStopSelection = (stopId: string, updates: Partial<StopSelection>) => {
+    setTripPlan(prev => ({
+      ...prev,
+      stopSelections: prev.stopSelections.map(s => 
+        s.stopId === stopId ? { ...s, ...updates } : s
+      )
+    }));
   };
 
-  const setPlanTier = (tier: PlanTier) => setTripPlan(prev => ({ ...prev, selectedTier: tier }));
-
-  const autoBookAll = () => {
-    // In a real app, this would call an API.
-    // For now, we simulate success.
-    console.log("Auto-booking plan:", tripPlan);
+  const toggleActivity = (stopId: string, activityId: string) => {
+    setTripPlan(prev => ({
+      ...prev,
+      stopSelections: prev.stopSelections.map(s => {
+        if (s.stopId !== stopId) return s;
+        const has = s.selectedActivityIds.includes(activityId);
+        return {
+          ...s,
+          selectedActivityIds: has 
+            ? s.selectedActivityIds.filter(id => id !== activityId)
+            : [...s.selectedActivityIds, activityId]
+        };
+      })
+    }));
   };
 
-  // Compute live price
+  // --- PRICING ENGINE ---
   const priceSummary = useMemo<PriceSummary>(() => {
-    let transport = 0;
-    if (tripPlan.transport) {
-      transport = TRANSPORT_PRICES[tripPlan.transport] * (tripPlan.stops.length || 1); // rough estimate
+    const route = getRouteConfig(tripPlan.pickupId, tripPlan.destinationId);
+    
+    let transportTotal = 0;
+    let totalStay = 0;
+    let totalFood = 0;
+    let totalActivities = 0;
+    const stopCosts: any[] = [];
+
+    // Calculate transport cost (per leg)
+    if (route && tripPlan.transport) {
+      let prevId = tripPlan.pickupId;
+      route.stops.forEach(node => {
+        const selection = tripPlan.stopSelections.find(s => s.stopId === node.id);
+        if (selection && selection.isIncluded) {
+           const legPrice = getLegPrice(prevId, node.id, tripPlan.transport as any) || 1000; // fallback 1000
+           transportTotal += legPrice * tripPlan.travellers;
+           prevId = node.id;
+        }
+      });
     }
 
-    let stay = 0;
-    let food = 0;
-    let activities = 0;
+    // Calculate per-stop costs
+    tripPlan.stopSelections.filter(s => s.isIncluded).forEach(sel => {
+      const node = route?.stops.find(n => n.id === sel.stopId);
+      if (!node) return;
 
-    tripPlan.stops.forEach(stop => {
-      const data = getDestinationData(stop.destinationId);
-      
-      // Stay
-      if (stop.hotelId) {
-        const hotel = data.hotels.find(h => h.id === stop.hotelId);
-        if (hotel) stay += hotel.pricePerNight * stop.days;
+      let stay = 0;
+      if (sel.hotelId) {
+        const h = node.hotels.find(x => x.id === sel.hotelId);
+        if (h) stay = (h.pricePerNight * sel.days * tripPlan.travellers); 
+        // Note: in a real app, hotels might be per room. Here we do per person or total for simplicity.
       }
 
-      // Food
-      const meal = data.mealPackages.find(m => m.plan === stop.mealPlan);
-      if (meal) food += meal.pricePerDay * stop.days;
+      let food = 0;
+      const m = node.mealPackages.find(x => x.plan === sel.mealPlan);
+      if (m) food = m.pricePerDay * sel.days * tripPlan.travellers;
 
-      // Activities
-      stop.selectedActivities.forEach(actId => {
-        const act = data.activities.find(a => a.id === actId);
-        if (act) activities += act.price;
+      let activities = 0;
+      sel.selectedActivityIds.forEach(actId => {
+        const a = node.activities.find(x => x.id === actId);
+        if (a) activities += a.price * tripPlan.travellers;
       });
+
+      const stopSubtotal = stay + food + activities;
+      stopCosts.push({
+        stopId: sel.stopId,
+        stopName: sel.name,
+        stay,
+        food,
+        activities,
+        subtotal: stopSubtotal
+      });
+
+      totalStay += stay;
+      totalFood += food;
+      totalActivities += activities;
     });
 
-    const subtotal = transport + stay + food + activities;
-    const convenienceFee = Math.round(subtotal * 0.08); // 8% fee
-    const personalization = 499; // Flat fee
+    const subtotal = transportTotal + totalStay + totalFood + totalActivities;
+    const convenienceFee = subtotal * 0.08;
+    const taxes = subtotal * 0.05;
+    const total = subtotal + convenienceFee + taxes;
 
     return {
-      transport,
-      stay,
-      food,
-      activities,
+      transport: transportTotal,
+      stopCosts,
+      totalStay,
+      totalFood,
+      totalActivities,
+      subtotal,
       convenienceFee,
-      personalization,
-      total: subtotal + convenienceFee + personalization
+      taxes,
+      total,
+      perPerson: tripPlan.travellers > 0 ? total / tripPlan.travellers : total
     };
   }, [tripPlan]);
 
   return (
     <TripPlannerContext.Provider
       value={{
-        currentStep,
-        setCurrentStep,
+        phase,
+        setPhase,
         tripPlan,
         priceSummary,
         setPickup,
         setDestination,
         setTransport,
-        setBudget,
-        addStop,
-        removeStop,
-        reorderStops,
-        setDaysForStop,
-        setHotelForStop,
-        setMealPlanForStop,
-        toggleActivityForStop,
-        setPlanTier,
-        autoBookAll,
+        setTravellers,
+        confirmRoute,
+        applyAITrip,
+        toggleStopIncluded,
+        toggleStopCollapsed,
+        updateStopSelection,
+        toggleActivity
       }}
     >
       {children}

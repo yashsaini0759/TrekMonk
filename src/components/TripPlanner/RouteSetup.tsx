@@ -1,47 +1,50 @@
 import React from 'react';
 import { useTripPlanner } from '../../context/TripPlannerContext';
-import { DEPARTURE_CITIES, PLANNER_DESTINATIONS, TRANSPORT_PRICES } from '../../data/plannerData';
+import { DEPARTURE_CITIES, PLANNER_DESTINATIONS } from '../../data/routeData';
 import type { TransportMode } from '../../types/planner';
-import { FaBus, FaTrain, FaTaxi, FaPlane } from 'react-icons/fa';
+import { FaBus, FaTrain, FaTaxi, FaPlane, FaUsers } from 'react-icons/fa';
 
-const Step1_Route: React.FC = () => {
-  const { tripPlan, setPickup, setDestination, setTransport, setBudget } = useTripPlanner();
+const RouteSetup: React.FC = () => {
+  const { tripPlan, setPickup, setDestination, setTransport, setTravellers, confirmRoute } = useTripPlanner();
 
   const handleTransportClick = (mode: TransportMode) => {
     setTransport(mode);
   };
 
-  const budgetOptions = [
-    { value: 10000, label: '₹10,000 - Budget' },
-    { value: 25000, label: '₹25,000 - Standard' },
-    { value: 50000, label: '₹50,000 - Premium' },
-    { value: 100000, label: '₹1,00,000+ - Luxury' },
-  ];
+  const isReady = tripPlan.pickupId && tripPlan.destinationId && tripPlan.transport;
 
   return (
-    <div>
+    <div className="tp-step-content" style={{ maxWidth: '800px', margin: '0 auto' }}>
+      <div className="tp-step-header text-center">
+        <h2>Where do you want to go?</h2>
+        <p>Select your starting point, destination, and how you want to travel.</p>
+      </div>
+
       <div className="tp-form-group">
-        <label className="tp-label">Total Budget Estimate (per person)</label>
-        <select 
-          className="tp-select" 
-          value={tripPlan.budget}
-          onChange={(e) => setBudget(Number(e.target.value))}
-        >
-          {budgetOptions.map(opt => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
-        <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.25rem' }}>
-          We'll use this to recommend the best options for your trip.
-        </p>
+        <label className="tp-label">Number of Travellers</label>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <FaUsers size={24} style={{ color: 'var(--color-primary)' }} />
+          <input 
+            type="number" 
+            min="1" 
+            max="20" 
+            className="tp-select" 
+            style={{ width: '150px' }}
+            value={tripPlan.travellers}
+            onChange={(e) => setTravellers(Math.max(1, parseInt(e.target.value) || 1))}
+          />
+        </div>
       </div>
 
       <div className="tp-form-group">
         <label className="tp-label">Pickup City</label>
         <select 
           className="tp-select" 
-          value={tripPlan.pickup} 
-          onChange={(e) => setPickup(e.target.value)}
+          value={tripPlan.pickupId} 
+          onChange={(e) => {
+            const city = DEPARTURE_CITIES.find(c => c.id === e.target.value);
+            if (city) setPickup(city.id, city.name);
+          }}
         >
           <option value="" disabled>Select starting point...</option>
           {DEPARTURE_CITIES.map(city => (
@@ -67,9 +70,9 @@ const Step1_Route: React.FC = () => {
         </select>
       </div>
 
-      {tripPlan.pickup && tripPlan.destinationId && (
+      {tripPlan.pickupId && tripPlan.destinationId && (
         <div className="tp-form-group" style={{ marginTop: '2rem' }}>
-          <label className="tp-label">Mode of Transport</label>
+          <label className="tp-label">Preferred Mode of Transport</label>
           <div className="tp-transport-grid">
             
             <div 
@@ -78,7 +81,7 @@ const Step1_Route: React.FC = () => {
             >
               <div className="tp-transport-icon"><FaBus /></div>
               <span className="tp-transport-name">Volvo Bus</span>
-              <span className="tp-transport-price">~₹{TRANSPORT_PRICES.bus}</span>
+              <span className="tp-transport-price">₹800 – ₹1,500</span>
             </div>
 
             <div 
@@ -86,8 +89,8 @@ const Step1_Route: React.FC = () => {
               onClick={() => handleTransportClick('train')}
             >
               <div className="tp-transport-icon"><FaTrain /></div>
-              <span className="tp-transport-name">Train (3AC)</span>
-              <span className="tp-transport-price">~₹{TRANSPORT_PRICES.train}</span>
+              <span className="tp-transport-name">Train</span>
+              <span className="tp-transport-price">₹1,200 – ₹2,500</span>
             </div>
 
             <div 
@@ -96,7 +99,7 @@ const Step1_Route: React.FC = () => {
             >
               <div className="tp-transport-icon"><FaTaxi /></div>
               <span className="tp-transport-name">Private Cab</span>
-              <span className="tp-transport-price">~₹{TRANSPORT_PRICES.cab}</span>
+              <span className="tp-transport-price">₹3,500 – ₹6,000</span>
             </div>
 
             <div 
@@ -105,14 +108,25 @@ const Step1_Route: React.FC = () => {
             >
               <div className="tp-transport-icon"><FaPlane /></div>
               <span className="tp-transport-name">Flight</span>
-              <span className="tp-transport-price">~₹{TRANSPORT_PRICES.flight}</span>
+              <span className="tp-transport-price">₹5,000 – ₹9,000</span>
             </div>
 
           </div>
         </div>
       )}
+
+      <div className="text-center" style={{ marginTop: '2rem' }}>
+        <button 
+          className="tp-btn tp-btn-primary" 
+          style={{ width: '100%', justifyContent: 'center' }}
+          disabled={!isReady}
+          onClick={confirmRoute}
+        >
+          Build My Route
+        </button>
+      </div>
     </div>
   );
 };
 
-export default Step1_Route;
+export default RouteSetup;

@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Hero from '../components/Hero';
 import ExploreIndia from '../components/ExploreIndia';
 import { RegionSection } from '../components/RegionSection';
@@ -18,6 +19,7 @@ const trekToPlace = (trek: any) => ({
 
 const Home: React.FC = () => {
   const { preferences } = useUserPreferences();
+  const navigate = useNavigate();
 
   const heroBackgrounds = [
     'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1920&h=1080&fit=crop&q=80',
@@ -33,8 +35,8 @@ const Home: React.FC = () => {
     }
   };
 
-  const handleBookNow = () => {
-    console.log('Book Now clicked');
+  const handlePlanTrip = () => {
+    navigate('/plan-trip');
   };
 
   // Dynamically generate the 4 Region Rows based on what the user searched, clicked, or preferred
@@ -121,7 +123,7 @@ const Home: React.FC = () => {
         headline={`Har Safar,\nEk Naya Nazariya.`}
         subHeadline="Guided treks • Trusted leaders • Real experiences"
         primaryCta={{ text: 'Start Your Trek', onClick: handleStartTrek }}
-        secondaryCta={{ text: 'Book Now', onClick: handleBookNow }}
+        secondaryCta={{ text: 'Plan a Trip', onClick: handlePlanTrip }}
         transitionInterval={6000}
         enableParticles={false}
       />

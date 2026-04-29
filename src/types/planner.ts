@@ -1,24 +1,19 @@
-// TrekMonk — Trip Planner Type Definitions
+// TrekMonk — Smart Trip Planner Type Definitions v2
 
 export type TransportMode = 'bus' | 'train' | 'cab' | 'flight';
-export type HotelTier = 'budget' | 'standard' | 'premium';
-export type MealPlan = 'none' | 'basic' | 'fullboard';
-export type PlanTier = 'budget' | 'balanced' | 'premium';
+export type HotelTier = 'budget' | 'comfort' | 'luxury';
+export type MealPlan = 'none' | 'breakfast' | 'fullboard';
+export type PlannerPhase = 'setup' | 'customize' | 'review';
 
-export interface PlannerDestination {
-  id: string;
-  name: string;
-  state: string;
-  region: 'north' | 'south' | 'north-east' | 'rajasthan';
-  image: string;
-  tags: string[];
-}
+// ─────────────────────────────────────────────
+// CORE ENTITIES
+// ─────────────────────────────────────────────
 
 export interface DepartureCity {
   id: string;
   name: string;
   state: string;
-  regionType: 'north' | 'west' | 'south' | 'east';
+  region: 'north' | 'west' | 'south' | 'east' | 'north-east';
 }
 
 export interface Hotel {
@@ -29,6 +24,7 @@ export interface Hotel {
   rating: number;
   amenities: string[];
   image: string;
+  description: string;
 }
 
 export interface Activity {
@@ -49,68 +45,118 @@ export interface MealPackageOption {
   emoji: string;
 }
 
-export interface Restaurant {
-  name: string;
-  cuisine: string;
-  priceRange: string;
-  rating: number;
-}
+// ─────────────────────────────────────────────
+// ROUTE GRAPH & STOP NODES
+// ─────────────────────────────────────────────
 
-export interface DestinationData {
-  destinationId: string;
+/** A geographic stop on a route (intermediate or final) */
+export interface StopNode {
+  id: string;
+  name: string;
+  state: string;
+  region: string;
+  lat: number;
+  lng: number;
+  image: string;
+  travelNote: string;           // e.g. "Gateway to Garhwal Himalayas"
+  aiReason: string;             // "Why this stop?" explanation
+  travelTimeFromPrevHours: number; // hours from previous node
   hotels: Hotel[];
   activities: Activity[];
   mealPackages: MealPackageOption[];
-  restaurants: Restaurant[];
-  suggestedStops: string[];
+  isOptional: boolean;          // can the user skip this stop?
+}
+
+/** Route graph entry: pickup_id→destination_id */
+export interface RouteConfig {
+  routeKey: string;             // e.g. "del→dest_kedarkantha"
+  pickupId: string;
+  destinationId: string;
+  destinationName: string;
+  stops: StopNode[];            // IN TRAVEL ORDER, pickup excluded, destination last
+  totalEstimatedHours: number;
   highlights: string[];
 }
 
-export interface PlanStop {
-  destinationId: string;
-  name: string;
-  days: number;
-  hotelId: string | null;
-  selectedActivities: string[];
-  mealPlan: MealPlan;
+/** Per-leg transport pricing */
+export interface LegPricing {
+  fromId: string;
+  toId: string;
+  bus?: number;
+  train?: number;
+  cab: number;
+  flight?: number;
 }
 
+// ─────────────────────────────────────────────
+// USER'S TRIP STATE
+// ─────────────────────────────────────────────
+
+/** User's customisations for a single stop */
+export interface StopSelection {
+  stopId: string;
+  name: string;
+  isIncluded: boolean;          // user can toggle optional stops
+  isCollapsed: boolean;         // accordion state
+  days: number;                 // 1–7
+  hotelId: string | null;
+  mealPlan: MealPlan;
+  selectedActivityIds: string[];
+}
+
+/** The entire trip plan */
 export interface TripPlan {
-  pickup: string;
+  pickupId: string;
+  pickupName: string;
   destinationId: string;
+  destinationName: string;
   transport: TransportMode | null;
-  stops: PlanStop[];
-  selectedTier: PlanTier;
-  budget: number;
+  travellers: number;
+  stopSelections: StopSelection[]; // in travel order
+}
+
+// ─────────────────────────────────────────────
+// PRICING
+// ─────────────────────────────────────────────
+
+export interface StopCost {
+  stopId: string;
+  stopName: string;
+  stay: number;
+  food: number;
+  activities: number;
+  subtotal: number;
 }
 
 export interface PriceSummary {
   transport: number;
-  stay: number;
-  food: number;
-  activities: number;
-  convenienceFee: number;
-  personalization: number;
+  stopCosts: StopCost[];
+  totalStay: number;
+  totalFood: number;
+  totalActivities: number;
+  subtotal: number;
+  convenienceFee: number;   // 8%
+  taxes: number;            // 5% GST
   total: number;
+  perPerson: number;
 }
 
-export interface PlanVariant {
-  tier: PlanTier;
-  label: string;
-  tagline: string;
-  emoji: string;
-  totalPrice: number;
-  duration: number;
-  highlights: string[];
-  transport: TransportMode;
-  stops: PlanStop[];
-  color: string;
+// ─────────────────────────────────────────────
+// BOOKING
+// ─────────────────────────────────────────────
+
+export interface BookingDetails {
+  name: string;
+  email: string;
+  phone: string;
+  specialRequests: string;
 }
 
 export interface BookingRecord {
   id: string;
-  plan: TripPlan;
-  summary: PriceSummary;
+  tripPlan: TripPlan;
+  priceSummary: PriceSummary;
+  bookingDetails: BookingDetails;
   createdAt: string;
   status: 'confirmed';
 }
